@@ -1,3 +1,7 @@
 tabs:
-  "first tab": ls
-  "second tab": ls
+  - tab1:
+    - ls
+    - pwd
+  - tab2:
+    - ls
+    - pwd

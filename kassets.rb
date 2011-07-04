@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'yaml'
 require 'ap'
 
@@ -10,6 +11,10 @@ class Konsole
 
   def title=(title)
     system %{qdbus org.kde.konsole /Sessions/#{@session_id} setTitle 1 "#{title}"}
+  end
+
+  def commands(cmds)
+    cmds.each {|cmd| command(cmd)}
   end
 
   def command(cmd)
@@ -31,7 +36,7 @@ class Kassets
   CONFIG_FILE = '.kassets'
 
   def run
-    tabs.each {|name, cmd| Konsole.new(name).command(cmd) }
+    tabs.each {|hash| Konsole.new(hash.keys.first).commands(hash.values.first) }
     open_first_tab
   end
 
@@ -50,7 +55,7 @@ class Kassets
     end
 
     def locate_config
-      CONFIG_FILE
+      File.join(File.dirname(__FILE__), CONFIG_FILE)
     end
 
 end
